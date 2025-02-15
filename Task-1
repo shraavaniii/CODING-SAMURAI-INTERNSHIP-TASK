@@ -1,0 +1,180 @@
+#include <iostream>
+#include <fstream>
+
+using namespace std;
+
+// Class Definition 
+class BankAccount{
+public:
+    string accountNumber;
+    string name;
+    double balance;
+
+    // Default Constructor
+    BankAccount(){}
+
+    // Parameterized Constructor
+    BankAccount(string accNum, string n, double b)
+    {
+        accountNumber = accNum;
+        name = n;
+        balance = b;
+    }
+
+    // Member Functions
+    // To deposit money
+    void deposit(double amount){
+        balance += amount;
+        cout << "\nAmount deposited! \nNew balance: " << balance << endl;
+    }
+
+    // To withdraw money
+    void withdraw(double amount){
+        if(amount <= balance){
+            cout << "\nWithdrawal successful!" << endl;
+            balance -= amount;
+            cout << "New balance: " << balance << endl;
+        }
+        if(amount > balance)
+            cout << "\nInsufficient Balance!";
+    }
+
+    // To display balance in your account
+    void displayBalance(){
+        cout << "\nAccount Balance: " << balance << endl;
+    }
+};
+
+// To save the created accounts in accounts.txt
+void saveAccount(BankAccount &acc){
+    ofstream file("C:/Users/Shravani/OneDrive/Desktop/Study/accounts.txt", ios::app);
+    file << acc.accountNumber << " " << acc.name << " " << acc.balance << endl;
+    file.close();
+}
+
+
+BankAccount loadAccount(string accNum){
+    ifstream file("C:/Users/Shravani/OneDrive/Desktop/Study/accounts.txt");
+    string accNumber, accName;
+    double bal;
+
+    while(file >> accNumber >> accName >> bal){
+        if(accNumber == accNum){
+            file.close();
+            return BankAccount(accNumber,accName,bal);
+        }
+    }
+    file.close();
+    return BankAccount();
+}
+
+// Update account after transactions
+void updateAccount(BankAccount &acc){
+    ifstream file("C:/Users/Shravani/OneDrive/Desktop/Study/accounts.txt");
+    ofstream temp("C:/Users/Shravani/OneDrive/Desktop/Study/temp.txt");
+    string accNumber, accName;
+    double bal;
+
+    while(file >> accNumber >> accName >> bal){
+        if(accNumber == acc.accountNumber){
+            temp << acc.accountNumber << " " << acc.name << " " << acc.balance << endl;
+        }else{
+            temp << accNumber << " " << accName << " " << bal << endl;
+        }
+    }
+    file.close();
+    temp.close();
+    remove("C:/Users/Shravani/OneDrive/Desktop/Study/accounts.txt");
+    rename("C:/Users/Shravani/OneDrive/Desktop/Study/temp.txt", "C:/Users/Shravani/OneDrive/Desktop/Study/accounts.txt");
+}
+
+// Main function
+int main()
+{
+    string accNum, name;
+    double balance;
+    double amount;
+    int choice;
+    char x;
+
+    do{
+        cout << "\n1. Create Account\n2. Deposit\n3. Withdraw\n4. Check Balance\n5. Exit\nEnter your choice: ";
+        cin >> choice;
+        
+        // Using switch statement
+        switch(choice){
+        case 1:{
+            cout << "\nEnter your Account Number: ";
+            cin >> accNum;
+            cout << "Enter your name: ";
+            cin >> name;
+            cout << "Enter your Initial Balance: ";
+            cin >> balance;
+
+            BankAccount acc(accNum,name,balance);
+            saveAccount(acc);
+            break;
+        }
+
+        case 2:{
+            cout << "\nEnter Account Number: ";
+            cin >> accNum;
+            BankAccount acc = loadAccount(accNum);
+
+            if(!acc.accountNumber.empty()){
+                cout << "Enter amount: ";
+                cin >> amount;
+                acc.deposit(amount);
+                updateAccount(acc);
+            }
+            else{
+                cout << "Account not found!" << endl;
+            }
+            break;
+        }
+
+        case 3:{
+            cout << "\nEnter Account Number: ";
+            cin >> accNum;
+            BankAccount acc = loadAccount(accNum);
+
+            if(!acc.accountNumber.empty()){
+                cout << "Enter amount to withdraw: ";
+                cin >> amount;
+                acc.withdraw(amount);
+                updateAccount(acc);
+            }
+            else{
+                cout << "Account not found!" << endl;
+            }
+            break;
+        }
+
+        case 4:{
+            cout << "\nEnter Account Number: ";
+            cin >> accNum;
+            BankAccount acc = loadAccount(accNum);
+
+            if(!acc.accountNumber.empty()){
+                acc.displayBalance();
+            }
+            else{
+                cout << "Account not found!" << endl;
+            }
+            break;
+        }
+
+        case 5:
+            return 0;
+
+        default:
+            cout << "\nInvalid choice! Try again.." << endl;
+        }
+
+        cout << endl << "Do you want to continue? "<< endl;
+        cin >> x;
+
+    }while(x == 'Y' || x == 'y');
+
+    return 0;
+}
