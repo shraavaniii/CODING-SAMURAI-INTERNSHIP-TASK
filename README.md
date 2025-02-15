@@ -1,5 +1,6 @@
-# CODING-SAMURAI-INTERNSHIP-TASK-1
+# CODING-SAMURAI-INTERNSHIP-TASK-1&2
 
+**Task-1**
 **Bank Account Management System 🏦**  
 *Overview*  
 This project is a Bank Account Management System developed in C++ as part of an internship task. It provides basic banking functionalities such as:  
@@ -46,3 +47,44 @@ Future Enhancements 🚀
 
 License  
 This project is open-source and available under the MIT License.
+
+
+**Task-2**
+**🔢 Simple Calculator**  
+*📌 Project Overview*  
+This is a basic calculator built in C++ that can perform fundamental arithmetic operations such as addition, subtraction, multiplication, division, and modulus.  
+The program provides a menu-driven interface and allows users to perform multiple calculations until they choose to exit.  
+
+✅ Key Features:  
+- Supports five arithmetic operations.
+- User-friendly menu for selecting operations.
+- Uses a loop to allow multiple calculations in one session.
+- Handles invalid choices gracefully.
+
+🚀 C++ Concepts Used  
+1. Variables & Data Types:
+int a, b, operation; → Stores numbers and user choice.
+char choice; → Determines if the user wants to continue.
+2. Input & Output Handling:
+cin >> a; → Takes user input for calculations.
+cout << "Addition: " << a + b; → Displays results dynamically.
+3. Control Structures:
+switch-case → Implements the menu-driven system for selecting operations.
+do-while loop → Ensures the calculator runs until the user decides to exit.
+default case → Handles invalid operation choices.
+4. Arithmetic Operators:
+Addition (+), Subtraction (-), Multiplication (*), Division (/), Modulus (%) are used to perform calculations.
+5. Looping & Decision Making:
+do-while loop → Allows the user to perform multiple calculations in one session.
+6. Basic Error Handling:
+The program prevents abrupt termination due to invalid user choices.
+Handles division by zero indirectly (though explicit validation can be added)
+
+💡 Learning Outcomes  
+By working on this project, I've gain hands-on experience with:  
+✅ C++ basic syntax & structure  
+✅ User input handling (cin, cout)  
+✅ Decision-making (switch-case)  
+✅ Looping (do-while)  
+✅ Arithmetic operations & expressions  
+✅ Error handling for invalid choice  
